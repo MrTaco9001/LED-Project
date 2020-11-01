@@ -26,13 +26,11 @@ void loop()
 	// delay(del);
 
 	buttonState = digitalRead(BUTTON_PIN);
-	CRGB
 
-	if (buttonState == 1) {
+	if (buttonState == HIGH) {
 		leds[0] = CRGB::Red;
 		FastLED.show();
 	} else {
-		leds[0] = CRGB::Black;
-		FastLED.show();
+		FastLED.clear();
 	}
 }
