@@ -1,36 +1,41 @@
 #include <FastLED.h>
 
-#define DATA_PIN 3
-#define NUM_LEDS 10
-#define BUTTON_PIN 2
+#define LED_DATA_PIN 2
+#define LED_PWR_PIN 1
 
-int del = 75;
-int buttonState = 0;
+#define NUM_LEDS 58
+#define DURATION 20
 
 CRGB leds[NUM_LEDS];
 
 void setup()
 {
-	// put your setup code here, to run once:
-	pinMode(BUTTON_PIN, INPUT);
+	pinMode(LED_PWR_PIN, OUTPUT);
+	pinMode(LED_DATA_PIN, OUTPUT);
 
-	FastLED.addLeds<WS2812B, DATA_PIN, GRB>(leds, NUM_LEDS);
+	digitalWrite(LED_PWR_PIN, HIGH);
+
+	FastLED.addLeds<WS2812B, LED_DATA_PIN, GRB>(leds, NUM_LEDS);
 }
 
 void loop()
 {
-	// put your main code here, to run repeatedly:
-	// leds[0] = CRGB::Green;
-	// leds[9] = CRGB::Black;
-	// FastLED.show();
-	// delay(del);
-
-	buttonState = digitalRead(BUTTON_PIN);
-
-	if (buttonState == HIGH) {
-		leds[0] = CRGB::Red;
-		FastLED.show();
-	} else {
+	for (int i = 0; i < NUM_LEDS; i++)
+	{
 		FastLED.clear();
+		leds[i].setRGB(0, random(255), random(255));
+		FastLED.show();
 	}
+
+	// for (int i = 0; i < (NUM_LEDS / 2); i++)
+	// {
+	// 	FastLED.clear();
+	// 	leds[i].setRGB(255, 0, 0);
+	// 	FastLED.show();
+	// 	delay(DURATION / 2);
+	// 	FastLED.clear();
+	// 	leds[NUM_LEDS - i].setRGB(255, 0, 0);
+	// 	FastLED.show();
+	// 	delay(DURATION / 2);
+	// }
 }
